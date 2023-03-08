@@ -7,5 +7,9 @@ export function TestComp() {
         return await result.json();
     });
 
-    return <div>{JSON.stringify(query.data)}</div>;
+    return (
+        <div className="text-3xl font-bold bg-cyan-100 border-4 border-red-500">
+            {JSON.stringify(query.data)}
+        </div>
+    );
 }
