@@ -1,7 +1,12 @@
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { TestComp } from './test-comp';
+
+const queryClient = new QueryClient();
+
 export function App() {
     return (
-        <div>
-            <h1>Vite + React</h1>
-        </div>
+        <QueryClientProvider client={queryClient}>
+            <TestComp />
+        </QueryClientProvider>
     );
 }
