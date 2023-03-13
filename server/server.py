@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from config import SERVER_PORT, DB_SERVER
@@ -9,20 +9,30 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_SERVER
 db = SQLAlchemy(app)
+app.app_context().push()
 
-class User(db.Model):
+class Quote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String)
+    text = db.Column(db.String, nullable=False)
+    author = db.Column(db.String, nullable=False)
 
-    def __init__(self, name, email):
-        self.name = name
-        self.email = email
+    def __init__(self, text, author):
+        self.text = text
+        self.author = author
 
 @app.route("/")
 def hello_world():
     return { 'message': 'hello' }
 
+@app.post('/')
+def create_quote():
+    quote = request.json['quote']
+    author = request.json['author']
+    
+    db.session.add(Quote(quote, author))
+    db.session.commit()
+
+    return { 'quote': quote, 'author': author }
+
 if __name__ == '__main__':
-    db.create_all()
     app.run(host='localhost', port=SERVER_PORT, debug=True)
