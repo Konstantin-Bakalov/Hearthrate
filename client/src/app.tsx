@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { TestComp } from './test-comp';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ResultsPage } from './results-page';
+import { VotingPage } from './voting-page';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -14,8 +16,14 @@ const queryClient = new QueryClient({
 
 export function App() {
     return (
-        <QueryClientProvider client={queryClient}>
-            <TestComp />
-        </QueryClientProvider>
+        <BrowserRouter>
+            <QueryClientProvider client={queryClient}>
+                <Routes>
+                    <Route path="/" element={<VotingPage />} />
+                    <Route path="/results" element={<ResultsPage />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+            </QueryClientProvider>
+        </BrowserRouter>
     );
 }

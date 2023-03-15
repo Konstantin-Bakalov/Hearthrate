@@ -25,7 +25,7 @@ const getTwoRandomCards = async () => {
     return response.data;
 };
 
-export function TestComp() {
+export function VotingPage() {
     const queryClient = useQueryClient();
 
     const { data } = useQuery<Response>(
