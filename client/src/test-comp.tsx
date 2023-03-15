@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { config } from './config';
+import axios from './main';
 
 interface Card {
     id: number;
@@ -18,11 +17,11 @@ interface Vote {
 }
 
 const postVote = (vote: Vote) => {
-    return axios.post(`${config.serverUrl}/vote`, vote);
+    return axios.post('vote', vote);
 };
 
 const getTwoRandomCards = async () => {
-    const response = await axios.get(`${config.serverUrl}/cards`);
+    const response = await axios.get('cards');
     return response.data;
 };
 
