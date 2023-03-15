@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from config import SERVER_PORT, DB_SERVER, CARDS
@@ -49,17 +49,31 @@ def get_cards():
     second_card = Cards.query.get_or_404(second)
 
     data = {
-       "first_card": {
+       "firstCard": {
             "id": first_card.id,
             "image": first_card.image
        },
-       "second_card": {
+       "secondCard": {
             "id": second_card.id,
             "image": second_card.image
        }
     }
 
     return jsonify(data)
+
+@app.post("/vote")
+def create_vote():
+    voted_for_id = request.json['votedForId']
+    voted_against_id = request.json['votedAgainstId']
+    
+    vote = Votes(voted_for_id=voted_for_id, voted_against_id=voted_against_id)
+    db.session.add(vote)
+    db.session.commit()
+
+    return jsonify({
+        "voted_for_id": vote.voted_for_id,
+        "voted_against_id": vote.voted_against_id
+    })
 
 if __name__ == '__main__':
     app.run(host='localhost', port=SERVER_PORT, debug=True)

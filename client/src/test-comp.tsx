@@ -1,4 +1,5 @@
-import { useQuery } from 'react-query';
+import axios from 'axios';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { config } from './config';
 
 interface Card {
@@ -7,21 +8,62 @@ interface Card {
 }
 
 interface Response {
-    first_card: Card;
-    second_card: Card;
+    firstCard: Card;
+    secondCard: Card;
 }
 
+interface Vote {
+    votedForId: number;
+    votedAgainstId: number;
+}
+
+const postVote = (vote: Vote) => {
+    return axios.post(`${config.serverUrl}/vote`, vote);
+};
+
+const getTwoRandomCards = async () => {
+    const response = await axios.get(`${config.serverUrl}/cards`);
+    return response.data;
+};
+
 export function TestComp() {
-    const { data } = useQuery<Response>('get-two-random-cards', async () => {
-        return await (await fetch(`${config.serverUrl}/cards`)).json();
+    const queryClient = useQueryClient();
+
+    const { data } = useQuery<Response>(
+        'get-two-random-cards',
+        getTwoRandomCards,
+    );
+
+    const { mutate } = useMutation(postVote, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('get-two-random-cards');
+        },
     });
 
     return (
         <div>
             {data && (
-                <div className="text-3xl flex font-bold bg-cyan-100 border-4 border-red-500">
-                    <img src={data.first_card.image} />
-                    <img src={data.second_card.image} />
+                <div className="text-3xl flex justify-center font-bold bg-cyan-100 border-4 border-red-500">
+                    <button
+                        onClick={() =>
+                            mutate({
+                                votedForId: data.firstCard.id,
+                                votedAgainstId: data.secondCard.id,
+                            })
+                        }
+                    >
+                        <img src={data.firstCard.image} />
+                    </button>
+                    <button
+                        onClick={() =>
+                            mutate({
+                                votedForId: data.secondCard.id,
+                                votedAgainstId: data.firstCard.id,
+                            })
+                        }
+                    >
+                        <img src={data.secondCard.image} />
+                    </button>
                 </div>
             )}
         </div>
