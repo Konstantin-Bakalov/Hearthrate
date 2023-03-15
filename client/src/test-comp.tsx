@@ -1,44 +1,23 @@
-import { useState } from 'react';
+import { useQuery } from 'react-query';
 import { config } from './config';
 
 export function TestComp() {
-    const [cardId, setCardId] = useState(0);
+    const { data, isLoading } = useQuery('get-two-random-cards', async () => {
+        const result = await fetch(`${config.serverUrl}/cards`);
+
+        return await result.json();
+    });
+
     return (
-        <div className="text-3xl font-bold bg-cyan-100 border-4 border-red-500">
-            <button
-                onClick={() =>
-                    setCardId((prev) => {
-                        if (prev < 381) {
-                            return prev + 1;
-                        }
-
-                        return prev;
-                    })
-                }
-            >
-                +
-            </button>
-            <button
-                onClick={() =>
-                    setCardId((prev) => {
-                        if (prev > 0) {
-                            return prev - 1;
-                        }
-
-                        return prev;
-                    })
-                }
-            >
-                -
-            </button>
-            <div className="flex">
-                <button className="active:animate-ping">
-                    <img src={`${config.bucketUrl}/${cardId}.png`} />
-                </button>
-                <img
-                    src={`https://hearthrate-bucket.s3.eu-central-1.amazonaws.com/${cardId}.png`}
-                />
-            </div>
+        <div>
+            {isLoading ? (
+                <div>Loading</div>
+            ) : (
+                <div className="text-3xl flex font-bold bg-cyan-100 border-4 border-red-500">
+                    <img src={data.first_card.image} />
+                    <img src={data.second_card.image} />
+                </div>
+            )}
         </div>
     );
 }
