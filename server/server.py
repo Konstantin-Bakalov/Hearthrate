@@ -6,7 +6,8 @@ from sqlalchemy import text
 from config import SERVER_PORT, DB_SERVER
 import random
 
-CARDS=382
+CARDS = 382
+PAGE_SIZE = 10
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -76,9 +77,15 @@ def get_results():
     
     result = db.session.query(Cards.id, text('voted_for'), text('voted_against'))\
                             .join(query_vote_for, Cards.id == query_vote_for.c.id)\
-                            .join(query_vote_against, Cards.id == query_vote_against.c.id).all()
-
-    return { 'message': 'success'}
+                            .join(query_vote_against, Cards.id == query_vote_against.c.id)\
+                            .order_by(text('voted_for desc, voted_against desc'))\
+                            .offset(PAGE_SIZE * 0)\
+                            .limit(PAGE_SIZE)\
+                            .all()
+    
+    data = list(map(lambda card : { 'cardId': card[0], 'votedFor': card[1], 'votedAgainst': card[2] } , result))
+    
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(host='localhost', port=SERVER_PORT, debug=True)
