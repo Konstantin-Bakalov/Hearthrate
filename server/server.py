@@ -2,8 +2,11 @@ from datetime import datetime
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from config import SERVER_PORT, DB_SERVER, CARDS
+from sqlalchemy import text
+from config import SERVER_PORT, DB_SERVER
 import random
+
+CARDS=382
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -22,24 +25,6 @@ class Votes(db.Model):
     voted_for_id = db.Column(db.Integer, db.ForeignKey('cards.id'))
     voted_against_id = db.Column(db.Integer, db.ForeignKey('cards.id'))
     date_voted = db.Column(db.Date, default=datetime.utcnow)
-
-@app.route("/")
-def hello_world():
-    return { 'message': 'hello' }
-
-def get_random_number(not_this_one):
-    number = random.randint(1, CARDS)
-
-    if number == not_this_one:
-        return get_random_number(not_this_one)
-    
-    return number
-
-def get_two_random_numbers():
-    first = random.randint(1, CARDS)
-    second = get_random_number(first)
-
-    return (first, second)
 
 @app.get("/cards")
 def get_cards():
@@ -74,6 +59,26 @@ def create_vote():
         "voted_for_id": vote.voted_for_id,
         "voted_against_id": vote.voted_against_id
     })
+
+@app.get("/results")
+def get_results():
+    query_vote_for = db.session.\
+                            query(Cards.id, db.func.count(Votes.voted_for_id)\
+                            .label('voted_for'))\
+                            .outerjoin(Votes, Cards.id == Votes.voted_for_id)\
+                            .group_by(Cards.id).subquery()
+    
+    query_vote_against = db.session.\
+                            query(Cards.id, db.func.count(Votes.voted_against_id)\
+                            .label('voted_against'))\
+                            .outerjoin(Votes, Cards.id == Votes.voted_against_id)\
+                            .group_by(Cards.id).subquery()
+    
+    result = db.session.query(Cards.id, text('voted_for'), text('voted_against'))\
+                            .join(query_vote_for, Cards.id == query_vote_for.c.id)\
+                            .join(query_vote_against, Cards.id == query_vote_against.c.id).all()
+
+    return { 'message': 'success'}
 
 if __name__ == '__main__':
     app.run(host='localhost', port=SERVER_PORT, debug=True)

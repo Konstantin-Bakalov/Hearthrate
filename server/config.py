@@ -6,5 +6,3 @@ load_dotenv()
 SERVER_PORT = os.getenv('SERVER_PORT')
 
 DB_SERVER = os.getenv('DB_SERVER')
-
-CARDS = os.getenv('CARDS')
