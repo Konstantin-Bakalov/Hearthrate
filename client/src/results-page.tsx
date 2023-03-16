@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useState } from 'react';
 import { Card } from './card';
 import { useAsync } from './hooks/use-async';
 import axios from './main';
+import { Rating } from './rating';
 
 interface CardData {
     cardImage: string;
@@ -29,7 +29,7 @@ export function ResultsPage() {
     return (
         <div className="flex flex-col bg-slate-500">
             <div>Results</div>
-            {cards?.map((card, index) => (
+            {cards.map((card, index) => (
                 <div className="self-center" key={index}>
                     <Card
                         cardImage={card.cardImage}
@@ -37,8 +37,10 @@ export function ResultsPage() {
                         isLast={index == cards.length - 1}
                     />
                     <div className="flex justify-around">
-                        <div>Voted for: {card.votedFor}</div>
-                        <div>Voted against: {card.votedAgainst}</div>
+                        <Rating
+                            votedFor={card.votedFor}
+                            votedAgainst={card.votedAgainst}
+                        />
                     </div>
                 </div>
             ))}
