@@ -63,6 +63,8 @@ def create_vote():
 
 @app.get("/results")
 def get_results():
+    page = request.args.get('page', default=0, type = int)
+
     query_vote_for = db.session.\
                             query(Cards.id, db.func.count(Votes.voted_for_id)\
                             .label('voted_for'))\
@@ -75,15 +77,15 @@ def get_results():
                             .outerjoin(Votes, Cards.id == Votes.voted_against_id)\
                             .group_by(Cards.id).subquery()
     
-    result = db.session.query(Cards.id, text('voted_for'), text('voted_against'))\
+    result = db.session.query(Cards.image, text('voted_for'), text('voted_against'))\
                             .join(query_vote_for, Cards.id == query_vote_for.c.id)\
                             .join(query_vote_against, Cards.id == query_vote_against.c.id)\
                             .order_by(text('voted_for desc, voted_against desc'))\
-                            .offset(PAGE_SIZE * 0)\
+                            .offset(PAGE_SIZE * page)\
                             .limit(PAGE_SIZE)\
                             .all()
     
-    data = list(map(lambda card : { 'cardId': card[0], 'votedFor': card[1], 'votedAgainst': card[2] } , result))
+    data = list(map(lambda card : { 'cardImage': card[0], 'votedFor': card[1], 'votedAgainst': card[2] } , result))
     
     return jsonify(data)
 
