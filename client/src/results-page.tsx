@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 import { Card } from './card';
 import { useAsync } from './hooks/use-async';
 import axios from './main';
@@ -11,33 +11,28 @@ interface CardData {
     votedAgainst: number;
 }
 
-const getPage = async (page: number) => {
-    const response = await axios.get(`results?page=${page}`);
-    return response.data;
-};
-
 export function ResultsPage() {
-    const [page, setPage] = useState(0);
-    // const [cards, setCards] = useState<CardData[]>([]);
+    const [page, setPage] = useState(1);
+    const [cards, setCards] = useState<CardData[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    // const { loading: scrollLoading } = useAsync(async () => {
-    //     const response = await axios.get(`results?page=${page}`);
-    //     setCards((prev) => [...prev, ...response.data]);
-    // }, [page]);
-
-    const { data } = useQuery<CardData[]>(['get-page'], () => getPage(1));
+    const { loading: scrollLoading } = useAsync(async () => {
+        const response = await axios.get<CardData[]>(`results?page=${page}`);
+        setCards((prev) => [...prev, ...response.data]);
+        setSearchParams(new URLSearchParams({ page: String(page) }));
+    }, [page]);
 
     const nextPage = () => setPage((prev) => prev + 1);
 
     return (
         <div className="flex flex-col bg-slate-500">
             <div>Results</div>
-            {data?.map((card, index) => (
+            {cards.map((card, index) => (
                 <div className="self-center" key={index}>
                     <Card
                         cardImage={card.cardImage}
                         nextPage={nextPage}
-                        isLast={index == data?.length - 1}
+                        isLast={index == cards.length - 1}
                     />
                     <div className="flex justify-around">
                         <Rating
