@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 import { Card } from './card';
-import { useAsync } from './hooks/use-async';
 import { LoadingIndicator } from './loading-indicator';
 import axios from './main';
 import { Rating } from './rating';
@@ -17,17 +17,22 @@ export function ResultsPage() {
     const [cards, setCards] = useState<CardData[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const { loading: scrollLoading } = useAsync(async () => {
-        const response = await axios.get<CardData[]>(`results?page=${page}`);
-        setCards((prev) => [...prev, ...response.data]);
-        setSearchParams(new URLSearchParams({ page: String(page) }));
-    }, [page]);
+    const { isLoading: scrollLoading } = useQuery(
+        ['get-page', page],
+        async () => {
+            const response = await axios.get<CardData[]>(
+                `results?page=${page}`,
+            );
+            setCards((prev) => [...prev, ...response.data]);
+            setSearchParams(new URLSearchParams({ page: String(page) }));
+        },
+    );
 
     const nextPage = () => setPage((prev) => prev + 1);
 
     return (
-        <div className="flex flex-col bg-slate-500">
-            <div>Results</div>
+        <div className="flex flex-col gap-10 bg-slate-500">
+            <p className="self-center text-2xl">Results</p>
             {cards.map((card, index) => (
                 <div className="self-center" key={index}>
                     <Card

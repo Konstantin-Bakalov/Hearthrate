@@ -20,11 +20,12 @@ const formatRating = (rating: number) => {
 };
 
 export function Rating({ votedFor, votedAgainst }: RatingProps) {
-    const rating = calculateRating(votedFor, votedAgainst);
+    // const rating = calculateRating(votedFor, votedAgainst);
 
     return (
-        <div className="flex justify-center">
-            <p>{formatRating(rating)} %</p>
+        <div className="flex justify-center gap-5">
+            <p className="text-xl">Votes for: {votedFor}</p>
+            <p className="text-xl">Votes against: {votedAgainst}</p>
         </div>
     );
 }
