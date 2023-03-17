@@ -8,6 +8,8 @@ import random
 
 CARDS = 382
 PAGE_SIZE = 10
+MIN_PAGE = 1
+MAX_PAGE = 39
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -81,12 +83,17 @@ def get_results():
                             .join(query_vote_for, Cards.id == query_vote_for.c.id)\
                             .join(query_vote_against, Cards.id == query_vote_against.c.id)\
                             .order_by(text('voted_for desc, voted_against asc'))\
-                            .offset(PAGE_SIZE * page)\
-                            .limit(PAGE_SIZE)\
                             .all()
     
-    data = list(map(lambda card : { 'cardImage': card[0], 'votedFor': card[1], 'votedAgainst': card[2] } , result))
-    
+    # problem with paginate() method
+    # that's why we do pagination this way
+    paginated = []
+
+    if (page >= MIN_PAGE and page <= MAX_PAGE):
+        paginated = result[PAGE_SIZE * (page - 1):PAGE_SIZE * page]
+
+    data = list(map(lambda card : { 'cardImage': card[0], 'votedFor': card[1], 'votedAgainst': card[2] } , paginated))
+
     return jsonify(data)
 
 if __name__ == '__main__':
