@@ -42,7 +42,7 @@ export function VotingPage() {
     });
 
     return (
-        <div className="h-full bg-yellow-900 flex flex-col">
+        <div className=" bg-emerald-100 flex flex-col">
             <h2 className="text-4xl self-center">Which card is cooler?</h2>
             {data && (
                 <div className="h-full flex justify-center items-center gap-10 font-bold">

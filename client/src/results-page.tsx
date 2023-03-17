@@ -32,7 +32,7 @@ export function ResultsPage() {
 
     return (
         <div className="flex flex-col gap-10 bg-background">
-            <p className="self-center text-2xl">Results</p>
+            <h1 className="self-center text-2xl">Results</h1>
             {cards.map((card, index) => (
                 <div className="self-center" key={index}>
                     <Card
