@@ -11,6 +11,14 @@ const calculateRating = (votedFor: number, votedAgainst: number) => {
     return (votedFor / (votedFor + votedAgainst)) * 100;
 };
 
+const formatRating = (rating: number) => {
+    if (Number.isInteger(rating)) {
+        return rating;
+    }
+
+    return rating.toFixed(2);
+};
+
 export function Rating({ votedFor, votedAgainst }: RatingProps) {
     const rating = calculateRating(votedFor, votedAgainst);
 
@@ -19,7 +27,7 @@ export function Rating({ votedFor, votedAgainst }: RatingProps) {
             <div>
                 {votedFor} {votedAgainst}
             </div>
-            <div>{rating} %</div>
+            <div>{formatRating(rating)} %</div>
         </div>
     );
 }
