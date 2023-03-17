@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Card } from './card';
 import { useAsync } from './hooks/use-async';
+import { LoadingIndicator } from './loading-indicator';
 import axios from './main';
 import { Rating } from './rating';
 
@@ -34,14 +35,14 @@ export function ResultsPage() {
                         nextPage={nextPage}
                         isLast={index == cards.length - 1}
                     />
-                    <div className="flex justify-around">
-                        <Rating
-                            votedFor={card.votedFor}
-                            votedAgainst={card.votedAgainst}
-                        />
-                    </div>
+
+                    <Rating
+                        votedFor={card.votedFor}
+                        votedAgainst={card.votedAgainst}
+                    />
                 </div>
             ))}
+            {scrollLoading && <LoadingIndicator />}
         </div>
     );
 }

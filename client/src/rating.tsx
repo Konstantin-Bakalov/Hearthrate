@@ -23,11 +23,8 @@ export function Rating({ votedFor, votedAgainst }: RatingProps) {
     const rating = calculateRating(votedFor, votedAgainst);
 
     return (
-        <div>
-            <div>
-                {votedFor} {votedAgainst}
-            </div>
-            <div>{formatRating(rating)} %</div>
+        <div className="flex justify-center">
+            <p>{formatRating(rating)} %</p>
         </div>
     );
 }
