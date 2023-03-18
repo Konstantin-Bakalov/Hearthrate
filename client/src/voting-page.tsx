@@ -41,11 +41,11 @@ export function VotingPage() {
 
     return (
         <div className="bg-emerald-100 grow flex flex-col">
-            <h2 className="mt-24 text-4xl self-center">
+            <h1 className="mt-24 text-4xl self-center">
                 Which card is cooler?
-            </h2>
+            </h1>
             {data && (
-                <div className="h-full flex justify-center items-center gap-10 font-bold">
+                <div className="h-full flex justify-center items-center gap-10">
                     <button
                         onClick={() =>
                             mutate({
@@ -56,6 +56,7 @@ export function VotingPage() {
                     >
                         <img src={data.firstCard.image} />
                     </button>
+                    <h1 className="text-3xl">or</h1>
                     <button
                         onClick={() =>
                             mutate({
