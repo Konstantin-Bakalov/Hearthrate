@@ -2,7 +2,7 @@ const gitHub = 'https://github.com/Konstantin-Bakalov/Hearthrate';
 
 export function Footer() {
     return (
-        <div className="mt-auto flex justify-center gap-7 ml-7 p-2">
+        <div className="bg-slate-500 mt-auto flex justify-center gap-7 p-2">
             <h1 className="text-xl self-center">
                 Copyright © 2023 Konstantin Bakalov
             </h1>

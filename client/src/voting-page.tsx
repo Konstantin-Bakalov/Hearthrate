@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axios from './main';
 
@@ -28,7 +27,6 @@ const getTwoRandomCards = async () => {
 
 export function VotingPage() {
     const queryClient = useQueryClient();
-    const [effect, setEffect] = useState(false);
 
     const { data } = useQuery<Response>(
         'get-two-random-cards',
@@ -42,12 +40,13 @@ export function VotingPage() {
     });
 
     return (
-        <div className=" bg-emerald-100 flex flex-col">
-            <h2 className="text-4xl self-center">Which card is cooler?</h2>
+        <div className="bg-emerald-100 grow flex flex-col">
+            <h2 className="mt-24 text-4xl self-center">
+                Which card is cooler?
+            </h2>
             {data && (
                 <div className="h-full flex justify-center items-center gap-10 font-bold">
                     <button
-                        className="hover:animate-wiggle ease-in-out"
                         onClick={() =>
                             mutate({
                                 votedForId: data.firstCard.id,

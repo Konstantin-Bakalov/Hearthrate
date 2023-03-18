@@ -31,7 +31,7 @@ export function ResultsPage() {
     const nextPage = () => setPage((prev) => prev + 1);
 
     return (
-        <div className="flex flex-col gap-10 bg-background">
+        <div className="bg-emerald-100 flex flex-col grow gap-10">
             <h1 className="self-center text-2xl">Results</h1>
             {cards.map((card, index) => (
                 <div className="self-center" key={index}>
