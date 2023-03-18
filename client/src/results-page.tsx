@@ -33,7 +33,7 @@ export function ResultsPage() {
 
     return (
         <div className="bg-emerald-100 flex flex-col grow gap-10">
-            <h1 className="mt-24 self-center text-4xl">Results</h1>
+            <h1 className="mt-44 md:mt-24 self-center text-4xl">Results</h1>
             {Boolean(error) && <Alert />}
             {cards.map((card, index) => (
                 <div className="self-center" key={index}>

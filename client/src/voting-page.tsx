@@ -43,13 +43,13 @@ export function VotingPage() {
 
     return (
         <div className="bg-emerald-100 grow flex flex-col">
-            <h1 className="mt-24 text-4xl self-center">
+            <h1 className="mt-44 md:mt-24 text-4xl text-center">
                 Which card is cooler?
             </h1>
             {isLoading && <LoadingIndicator />}
             {Boolean(error) && <Alert />}
             {data && (
-                <div className="h-full flex justify-center items-center gap-10">
+                <div className="h-full mt-16 md:mt-0 flex flex-col md:flex-row justify-center items-center gap-10">
                     <button
                         className="hover:-translate-y-16 ease-in-out duration-1000"
                         onClick={() =>
