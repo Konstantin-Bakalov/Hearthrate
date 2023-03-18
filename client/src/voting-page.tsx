@@ -1,4 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { Alert } from './alert';
+import { LoadingIndicator } from './loading-indicator';
 import axios from './main';
 
 interface Card {
@@ -28,7 +30,7 @@ const getTwoRandomCards = async () => {
 export function VotingPage() {
     const queryClient = useQueryClient();
 
-    const { data } = useQuery<Response>(
+    const { data, isLoading, error } = useQuery<Response>(
         'get-two-random-cards',
         getTwoRandomCards,
     );
@@ -44,6 +46,8 @@ export function VotingPage() {
             <h1 className="mt-24 text-4xl self-center">
                 Which card is cooler?
             </h1>
+            {isLoading && <LoadingIndicator />}
+            {Boolean(error) && <Alert />}
             {data && (
                 <div className="h-full flex justify-center items-center gap-10">
                     <button

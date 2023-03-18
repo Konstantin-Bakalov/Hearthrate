@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
+import { Alert } from './alert';
 import { Card } from './card';
 import { LoadingIndicator } from './loading-indicator';
 import axios from './main';
@@ -17,7 +18,7 @@ export function ResultsPage() {
     const [cards, setCards] = useState<CardData[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const { isLoading: scrollLoading } = useQuery(
+    const { isLoading: scrollLoading, error } = useQuery(
         ['get-page', page],
         async () => {
             const response = await axios.get<CardData[]>(
@@ -27,12 +28,13 @@ export function ResultsPage() {
             setSearchParams(new URLSearchParams({ page: String(page) }));
         },
     );
-
+    console.log(error);
     const nextPage = () => setPage((prev) => prev + 1);
 
     return (
         <div className="bg-emerald-100 flex flex-col grow gap-10">
             <h1 className="mt-24 self-center text-4xl">Results</h1>
+            {Boolean(error) && <Alert />}
             {cards.map((card, index) => (
                 <div className="self-center" key={index}>
                     <Card
