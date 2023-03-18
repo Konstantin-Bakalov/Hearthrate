@@ -28,7 +28,7 @@ export function ResultsPage() {
             setSearchParams(new URLSearchParams({ page: String(page) }));
         },
     );
-    console.log(error);
+
     const nextPage = () => setPage((prev) => prev + 1);
 
     return (

@@ -1,2 +1,3 @@
-# Quickquote
-Website for rating quotes
+# Hearthrate
+
+Website for rating classic Hearthstone cards
