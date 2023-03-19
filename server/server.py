@@ -32,7 +32,7 @@ class Votes(db.Model):
 @app.get("/cards")
 def get_cards():
     first, second = random.sample(range(1, int(CARDS) + 1), 2)
-
+  
     first_card = Cards.query.get_or_404(first)
     second_card = Cards.query.get_or_404(second)
 
