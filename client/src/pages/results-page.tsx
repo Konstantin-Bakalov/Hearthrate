@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
-import { Alert } from './alert';
-import { Card } from './card';
-import { LoadingIndicator } from './loading-indicator';
-import axios from './main';
-import { Rating } from './rating';
+import { Alert } from '../components/alert';
+import { Card } from '../components/card';
+import { LoadingIndicator } from '../components/loading-indicator';
+import axios from '../main';
+import { Rating } from '../components/rating';
 
 interface CardData {
     cardImage: string;

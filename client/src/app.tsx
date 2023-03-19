@@ -1,9 +1,9 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Footer } from './footer';
-import { Header } from './header';
-import { ResultsPage } from './results-page';
-import { VotingPage } from './voting-page';
+import { Footer } from './components/footer';
+import { Header } from './components/header';
+import { ResultsPage } from './pages/results-page';
+import { VotingPage } from './pages/voting-page';
 
 const queryClient = new QueryClient({
     defaultOptions: {

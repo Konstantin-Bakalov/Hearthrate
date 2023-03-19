@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useObserver } from './hooks/use-observer';
+import { useObserver } from '../hooks/use-observer';
 
 interface CardProps {
     cardImage: string;

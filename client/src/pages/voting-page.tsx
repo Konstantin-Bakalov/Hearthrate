@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { Alert } from './alert';
-import { LoadingIndicator } from './loading-indicator';
-import axios from './main';
+import { Alert } from '../components/alert';
+import { LoadingIndicator } from '../components/loading-indicator';
+import axios from '../main';
 
 interface Card {
     id: number;
