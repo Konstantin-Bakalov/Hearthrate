@@ -51,7 +51,7 @@ export function VotingPage() {
             {data && (
                 <div className="h-full mt-16 md:mt-0 flex flex-col md:flex-row justify-center items-center gap-10">
                     <button
-                        className="hover:-translate-y-16 ease-in-out duration-1000"
+                        className="md:hover:-translate-y-16 ease-in-out duration-1000"
                         onClick={() =>
                             mutate({
                                 votedForId: data.firstCard.id,
@@ -63,7 +63,7 @@ export function VotingPage() {
                     </button>
                     <h1 className="text-3xl">or</h1>
                     <button
-                        className="hover:-translate-y-16 ease-in-out duration-1000"
+                        className="md:hover:-translate-y-16 ease-in-out duration-1000"
                         onClick={() =>
                             mutate({
                                 votedForId: data.secondCard.id,
