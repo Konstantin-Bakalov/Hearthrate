@@ -3,7 +3,7 @@ import logo from '../assets/hearthstone.png';
 
 export function Header() {
     return (
-        <div className="w-full z-10 fixed p-2 bg-slate-500">
+        <div className="w-full z-10 fixed p-2 bg-slate-500 drop-shadow-2xl">
             <div className="flex flex-col md:flex-row gap-2 md:gap-7 md:ml-7">
                 <Link to={'/'} className="flex self-center gap-2">
                     <img className="w-12" src={logo} />
