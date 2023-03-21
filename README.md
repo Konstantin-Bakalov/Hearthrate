@@ -1,3 +1,43 @@
+# Hearthrate
+
+Website for rating classic Hearthstone cards.
+
+## Live Demo
+
+[hearthrate.click](https://hearthrate.click/)
+
+## Features
+
+- Responsive design
+- Infinite scroll
+- Votes for and against for each card shown
+- Results ordered by votes
+- 382 cards to choose from
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+**Client:**
+
+`VITE_APP_SERVER_URL`
+
+**Server:**
+
+`DB_SERVER`, `SERVER_PORT`
+
+## Tech Stack
+
+**Client:** React, Vite, Tailwind CSS, Typescript, React Query
+
+**Server:** PostgreSQL, Python, Flask, Flask-SQLAlchemy, Gunicorn, Nginx
+
+**Others:** Prettier, ESLint
+
+## Deployment on AWS
+
+The client is deployed on a EC2 instance with a SSL certificate. The server runs on CloudFront. Images are stored in S3.
+
 ## Installation
 
 Install using npm
