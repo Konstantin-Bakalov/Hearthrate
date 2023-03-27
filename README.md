@@ -14,18 +14,6 @@ Website for rating classic Hearthstone cards.
 - Results ordered by votes
 - 382 cards to choose from
 
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-**Client:**
-
-`VITE_APP_SERVER_URL`
-
-**Server:**
-
-`DB_SERVER`, `SERVER_PORT`
-
 ## Tech Stack
 
 **Client:** React, Vite, Tailwind CSS, Typescript, React Query
@@ -37,6 +25,18 @@ To run this project, you will need to add the following environment variables to
 ## Deployment on AWS
 
 The client is deployed on an EC2 instance with a SSL certificate. The server runs on CloudFront. Images are stored in S3.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+**Client:**
+
+`VITE_APP_SERVER_URL`
+
+**Server:**
+
+`DB_SERVER`, `SERVER_PORT`
 
 ## Installation
 
