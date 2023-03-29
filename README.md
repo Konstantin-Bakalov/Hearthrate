@@ -6,6 +6,11 @@ Website for rating classic Hearthstone cards.
 
 [hearthrate.click](https://hearthrate.click/)
 
+## Preview
+
+![Homepage!](readme_images/home_page.png)
+![Results](readme_images/results_page.png)
+
 ## Features
 
 - Responsive design
