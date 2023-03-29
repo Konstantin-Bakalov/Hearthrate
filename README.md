@@ -17,7 +17,7 @@ Website for rating classic Hearthstone cards.
 - Infinite scroll
 - Votes for and against for each card shown
 - Results ordered by votes
-- 382 cards to choose from
+- 382 cards to choose from (scraped using Selenium)
 
 ## Tech Stack
 
