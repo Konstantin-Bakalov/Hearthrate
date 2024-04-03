@@ -29,7 +29,7 @@ Website for rating classic Hearthstone cards.
 
 ## Deployment on AWS
 
-The client is deployed on an EC2 instance with a SSL certificate. The server runs on CloudFront. Images are stored in S3.
+The server is deployed on an EC2 instance with a SSL certificate. The client runs on CloudFront. Images are stored in S3.
 
 ## Environment Variables
 
